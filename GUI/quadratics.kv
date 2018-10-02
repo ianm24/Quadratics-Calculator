@@ -1,0 +1,307 @@
+# Program made by Ian McDowell
+
+# give kivy file access to python code
+#: import main QuadraticsGUI
+# import ListAdapter kivy.adapters.listadapter.ListAdapter (not sure if needed since I havent looked at the code in a while so i left it in commented)
+
+# makes default button
+<CustButton@Button>:
+	font_size: 64
+
+# ~(-*-)~
+
+# general layout (everything is made inside this frame)
+<QuadraticsLayout>:
+	id: quad
+	display: entry1
+	orientation: "vertical"
+	spacing: 10
+	padding: 10
+
+	# makes the canvas that everything is displayed on
+	canvas:
+		Color:
+			rgb: .9, .9, .9
+		Rectangle:
+			size: self.size
+			pos: self.pos
+	
+	# shows the reference image for the user
+	Image:
+		source: 'test.png'
+		allow_stretch: True
+		keep_ratio:False
+		size_hint: .3, .4
+		pos_hint: {"center_x": 0.17, "y": .02}
+
+	# first entry box
+	FloatLayout:
+		TextInput:
+			id: entry1
+			hint_text: "A"
+			size_hint: .1, .1
+			pos_hint: {"x": .25, "top": .97}
+			font_size: 64
+			multiline: False
+	
+	# text next to first entry box
+	FloatLayout:
+		Label:
+			id: entry1lb
+			color: 0, 0, 0, 1
+			text: "Y="
+			size_hint: .2, .09
+			pos_hint: {"x": .1, "top": .97}
+			font_size: 64
+			multiline: False
+
+	# second entry box
+	FloatLayout:
+		TextInput:
+			id: entry2
+			hint_text: "B"
+			size_hint: .1, .1
+			pos_hint: {"x": .45, "top": 0.97}
+			font_size: 64
+			multiline: False
+
+	# text next to second entry box
+	FloatLayout:
+		Label:
+			id: entry2lb
+			color: 0, 0, 0, 1
+			text: "X²+"
+			size_hint: .2, .09
+			pos_hint: {"x": .3, "top": .97}
+			font_size: 64
+			multiline: False
+	
+	# third entry box
+	FloatLayout:
+		TextInput:
+			id: entry3
+			hint_text: "C"
+			size_hint: .1, .1
+			pos_hint: {"x": .65, "top": 0.97}
+			font_size: 64
+			multiline: False
+	
+	# text next to third entry box
+	FloatLayout:
+		Label:
+			id: entry2lb
+			color: 0, 0, 0, 1
+			text: "X+"
+			size_hint: .2, .09
+			pos_hint: {"x": .5, "top": .97}
+			font_size: 64
+			multiline: False
+	
+	# makes a box that contains a button that is able to use the input and output boxes to calculate the needed values based on the python code
+	BoxLayout:
+		spacing: 10
+		pos_hint: {"right": 1, "top": 1}
+		size_hint: .15, .15
+		CustButton:
+			text: "="
+			on_press: quad.calculate(entry1, entry2, entry3, abcform, quadform, standform, standconform, vert, foc, yint, aos, dire, rel, rellb)
+	
+	# box for the default quadratic form (abc form)
+	FloatLayout:
+		TextInput:
+			id: abcform
+			size_hint: .3, .1
+			pos_hint: {"x": 0.02, "center_y": .74}
+			font_size: 24
+			multiline: True
+	
+	# text that labels the abc form box
+	FloatLayout:
+		Label:
+			id: standformlb
+			color: 0, 0, 0, 1
+			text: "Y=AX²+BX+C:"
+			size_hint: .2, .09
+			pos_hint: {"x": 0.07, "center_y": .813}
+			font_size: 32
+			multiline: False
+	
+	# box for the calculated standard vertex form
+	FloatLayout:
+		TextInput:
+			id: standform
+			size_hint: .3, .1
+			pos_hint: {"x": .35, "center_y": .74}
+			font_size: 24
+			multiline: True
+	
+	# text that labels the standard vertex form box
+	FloatLayout:
+		Label:
+			id: standformlb
+			color: 0, 0, 0, 1
+			text: "Standard (Vertex) Form:"
+			size_hint: .2, .09
+			pos_hint: {"x": 0.4, "center_y": .813}
+			font_size: 32
+			multiline: False
+	
+	# box for the calculated standard conic form
+	FloatLayout:
+		TextInput:
+			id: standconform
+			size_hint: .3, .1
+			pos_hint: {"x": .67, "center_y": .74}
+			font_size: 24
+			multiline: True
+	
+	# text that labels the standard conic form box
+	FloatLayout:
+		Label:
+			id: standconformlb
+			color: 0, 0, 0, 1
+			text: "Standard Conic Equation:"
+			size_hint: .2, .09
+			pos_hint: {"x": 0.72, "center_y": .813}
+			font_size: 32
+			multiline: False
+	
+	# box for the calculated quadratic formula 
+	FloatLayout:
+		TextInput:
+			id: quadform
+			size_hint: .25, .18
+			pos_hint: {"x": 0.02, "center_y": .52}
+			font_size: 24
+			multiline: True
+	
+	# text that labels the quadratic formula box
+	FloatLayout:
+		Label:
+			id: quadformlb
+			color: 0, 0, 0, 1
+			text: "Quadratic Formula:"
+			size_hint: .2, .09
+			pos_hint: {"x": 0.04, "center_y": .63}
+			font_size: 32
+			multiline: False
+	
+	# box for the calculated vertex
+	FloatLayout:
+		TextInput:
+			id: vert
+			size_hint: .2, .09
+			pos_hint: {"x": 0.4, "center_y": .56}
+			font_size: 24
+			multiline: True
+	
+	# text that labels the vertex box
+	FloatLayout:
+		Label:
+			id: vertlb
+			color: 0, 0, 0, 1
+			text: "Vertex:"
+			size_hint: .2, .09
+			pos_hint: {"x": 0.4, "center_y": .63}
+			font_size: 32
+			multiline: False
+	
+	# box for the calculated focus
+	FloatLayout:
+		TextInput:
+			id: foc
+			size_hint: .2, .09
+			pos_hint: {"x": 0.4, "center_y": .42}
+			font_size: 24
+			multiline: True
+	
+	# text that labels the focus box
+	FloatLayout:
+		Label:
+			id: foclb
+			color: 0, 0, 0, 1
+			text: "Focus:"
+			size_hint: .2, .09
+			pos_hint: {"x": 0.4, "center_y": .49}
+			font_size: 32
+			multiline: False
+	
+	# box for the calculated y-intercept
+	FloatLayout:
+		TextInput:
+			id: yint
+			size_hint: .2, .09
+			pos_hint: {"x": 0.72, "center_y": .49}
+			font_size: 24
+			multiline: True
+	
+	# text that labels the y-intercept box
+	FloatLayout:
+		Label:
+			id: yintlb
+			color: 0, 0, 0, 1
+			text: "Y-Intercept:"
+			size_hint: .2, .09
+			pos_hint: {"x": 0.72, "center_y": .56}
+			font_size: 32
+			multiline: False
+	
+	# box for the calculated axis of symmetry
+	FloatLayout:
+		TextInput:
+			id: aos
+			size_hint: .2, .09
+			pos_hint: {"x": 0.4, "center_y": .24}
+			font_size: 24
+			multiline: True
+	
+	# text that labels the axis of symmetry box
+	FloatLayout:
+		Label:
+			id: aoslb
+			color: 0, 0, 0, 1
+			text: "Axis of Symmetry:"
+			size_hint: .2, .09
+			pos_hint: {"x": 0.4, "center_y": .31}
+			font_size: 32
+			multiline: False
+	
+	# box for the calculated directrix
+	FloatLayout:
+		TextInput:
+			id: dire
+			size_hint: .2, .09
+			pos_hint: {"x": 0.4, "center_y": .1}
+			font_size: 24
+			multiline: True
+
+	# text that labels the directrix box
+	FloatLayout:
+		Label:
+			id: direlb
+			color: 0, 0, 0, 1
+			text: "Directrix:"
+			size_hint: .2, .09
+			pos_hint: {"x": 0.4, "center_y": .17}
+			font_size: 32
+			multiline: False
+	
+	# box for the calculated relative min/max
+	FloatLayout:
+		TextInput:
+			id: rel
+			size_hint: .2, .09
+			pos_hint: {"x": 0.72, "center_y": .17}
+			font_size: 24
+			multiline: True
+	
+	# text that labels the relative min/max box
+	FloatLayout:
+		Label:
+			id: rellb
+			color: 0, 0, 0, 1
+			text: "Relative Min/Max:"
+			size_hint: .2, .09
+			pos_hint: {"x": 0.72, "center_y": .24}
+			font_size: 32
+			multiline: False
